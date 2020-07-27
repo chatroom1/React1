@@ -6,7 +6,8 @@ export class Search extends Component {
     constructor(props) {
         super(props);
         this.state={
-            tempValue:''
+            tempValue:'',
+            ObjectUser:{}
         }
         
     }
@@ -30,9 +31,19 @@ export class Search extends Component {
           return <div className="btn btn-block btn-outline-info" onClick={()=>this.props.ketnoi()}>AddUser</div> ;
         }
     }
+    GetUserEditInfo=(info)=>{
+        this.setState({
+            ObjectUser: info
+        });
+        this.props.getUserEditForm(info);
+       
+    }
     XuLyEditStatus=()=>{
         if(this.props.EditUserStatus===true){
-            return <EditUser changeEditUserStatus={()=>this.props.trangthaisuauser}/>
+            return <EditUser
+            GetUserEditInfo={(info)=>this.GetUserEditInfo(info)}    
+            userEditObject={this.props.userEditObject}
+            changeEditUserStatus={()=>this.props.trangthaiedit()}/>
         }
     }
 

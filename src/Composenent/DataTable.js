@@ -3,9 +3,11 @@ import TableDataRow from './TableDataRow'
 
 export class DataTable extends Component {
 
-
+  deleteButtonClick=(idUser)=>{
+  this.props.deleteUser(idUser);
+  }
   mappingdata=()=>this.props.hienthiuser.map((value,key)=>
-  (<TableDataRow  changeEditUserstatus={()=>this.props.changeEditUserStatus} editTableDatarow={(user)=>this.props.editTableData(value)} data={value.name} key={key} id={key} name={value.name}  tel={value.tel} permission={value.permission}/>))
+  (<TableDataRow deleteButtonClick={(idUser)=>this.deleteButtonClick(idUser)}  changeEditUserstatus={()=>this.props.trangthaiedit()} editTableDatarow={(user)=>this.props.editTableData(value)} data={value.name} key={key} id={value.id} name={value.name}  tel={value.tel} permission={value.permission}/>))
     render() {
         return (
             <div>

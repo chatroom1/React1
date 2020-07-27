@@ -19,11 +19,14 @@ class  App extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      trangthaisuauser: false,
+      
       trangthaichinhsua: false,
       data: Data,
-      text:''
+      text:'',
+      trangthaisuauser: false,
+      userEditObject:{}
     }
+  
     
   }
 
@@ -65,19 +68,46 @@ class  App extends React.Component {
   editTable=(user)=>{
 
     console.log('da ket noi');
+    this.setState({
+      userEditObject:user
+    });
     console.log(user);
   }
-  
-  trangthaiedit=()=>{
+
+  EditUserStatuss=()=>{
     this.setState({
-      trangthaisuauser:!this.state.trangthaisuauser
+      trangthaisuauser: !this.state.trangthaisuauser
+      
+    });
+ 
+  }
+  getUserEditForm=(info)=>{
+   console.log('thong tin da sua la xong la:'+info.name);
+   this.state.data.forEach((value,key)=>{
+    if(value.id===info.id){
+      value.name=info.name;
+      value.tel=info.tel;
+      value.permission=info.permission;
+    }
+   })
+  }
+
+  deleteUser=(idUser)=>{
+    var temData=this.state.data.filter(item=>item.id!==idUser);
+    this.setState({
+      data:temData
     });
 
-   }
-
+    // temData.forEach((value,key)=>{
+    //   if(value.id===idUser){
+    //     console.log(key);
+    //   }
+    // }) 
+   
+  }
 
     render(){
-      var ketqua=[];
+       var ketqua=[];
       var dats= this.state.data;
       var texts=this.state.text;
      dats.forEach(function(item){
@@ -87,7 +117,7 @@ class  App extends React.Component {
       }
       
       })
-    //  console.log(ketqua);
+     console.log(ketqua);
       
    
  
@@ -101,16 +131,14 @@ class  App extends React.Component {
          <div className="row">
           <div className="col-12">
           <Search 
+          getUserEditForm={(info)=>this.getUserEditForm(info)}
           checkConnect={(dl)=>this.getTextSearch(dl)}
            ketnoi={()=>this.thaydoitrangthai() }
             trangthaichinhsua={this.state.trangthaichinhsua}
-            EditUserStatus={this.trangthaisuauser}
-            trangthaiedit={this.trangthaiedit()}
-           
-            
-           
-           
-          
+            EditUserStatus={this.state.trangthaisuauser}
+            trangthaiedit={()=>this.EditUserStatuss()}
+            userEditObject={this.state.userEditObject}
+                
             />
 
           </div>
@@ -118,8 +146,10 @@ class  App extends React.Component {
           <hr/>
           </div>
           <div className="col-8">
-          <DataTable editTableData={(user)=>this.editTable(user)} hienthiuser={ketqua}
-           trangthaiedit  ={()=>this.trangthaiedit() }
+          <DataTable 
+          deleteUser={(idUser)=>this.deleteUser(idUser)}
+          editTableData={(user)=>this.editTable(user)} hienthiuser={ketqua}
+           trangthaiedit={()=>this.EditUserStatuss()}
             />
           
 
@@ -132,10 +162,7 @@ class  App extends React.Component {
          </div>
        </div>
      </div>
-    
 
-
-     
      
     </div>
   );

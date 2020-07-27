@@ -15,6 +15,9 @@ export class TableDataRow extends Component {
         this.props.editTableDatarow();
         this.props.changeEditUserstatus();
     }
+    deleteButtonClick=(idUser)=>{
+     this.props.deleteButtonClick(idUser);
+    }
     render() {
 
         return (
@@ -26,7 +29,7 @@ export class TableDataRow extends Component {
                 <td>{this.PermissionShow()}</td>
                 <td>
                     <div className="btn btn-warning sua" onClick={()=>this.editClickFun()}><i className="fa fa-edit">Sửa</i></div>
-                    <div className="btn btn-danger xoa" ><i className="fa fa-edit">Xoá</i></div>
+                    <div className="btn btn-danger xoa" onClick={(idUser)=>this.deleteButtonClick(this.props.id)} ><i className="fa fa-edit">Xoá</i></div>
                 </td>
             </tr>
                 
